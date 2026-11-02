@@ -8,12 +8,14 @@ import { useQuery } from "@tanstack/react-query";
 import { getSheets } from "@/actions/get-sheets";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Show, SignedIn, SignIn, UserButton, useUser } from "@clerk/nextjs";
 
 const Sidebar = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isExpanded, setIsExpanded] = useState(true);
 	const ref = useRef<HTMLDivElement>(null);
 	const pathname = usePathname();
+	const { user } = useUser();
 
 	const handleClick = () => {
 		setIsOpen(true);
@@ -37,7 +39,7 @@ const Sidebar = () => {
 
 	return (
 		<div
-			className={`relative p-5 space-y-4 ${isExpanded ? "w-75" : "w-20"} border-r border-stone-700 h-full select-none duration-150 transition-all`}
+			className={`relative ${isExpanded ? "w-75" : "w-20"} border-r border-stone-700 h-full select-none duration-150 transition-all flex flex-col`}
 		>
 			<div
 				onClick={() => setIsExpanded(!isExpanded)}
@@ -49,10 +51,10 @@ const Sidebar = () => {
 					<ChevronRight className="text-stone-400" />
 				)}
 			</div>
-			<div className="text-3xl font-bold text-green-500">
+			<div className="p-5 text-3xl font-bold text-green-500">
 				{isExpanded ? "Kamai Khata" : "KK"}
 			</div>
-			<div ref={ref} className="space-y-4">
+			<div ref={ref} className="space-y-4 px-5">
 				<button
 					onClick={handleClick}
 					className={`border border-stone-700 w-full p-2 ${isExpanded ? "rounded-md" : "rounded-[20px]"} flex items-center justify-center cursor-pointer hover:border-white duration-500 transition-all text-white`}
@@ -62,7 +64,7 @@ const Sidebar = () => {
 				{isOpen && <Dropdown setIsOpen={setIsOpen} />}
 			</div>
 			{isExpanded && (
-				<div className="space-y-4 w-full">
+				<div className="space-y-4 w-full flex-1 p-5">
 					{sheets.map(sheet => {
 						const isActive = pathname === `/sheet/${sheet.id}`;
 
@@ -78,6 +80,29 @@ const Sidebar = () => {
 					})}
 				</div>
 			)}
+			<Show when="signed-out">
+				<Link
+					href={"/sign-in"}
+					className="border border-stone-700 text-white p-2 w-full rounded-md hover:border-white duration-500 transition-all cursor-pointer"
+				>
+					Log In
+				</Link>
+			</Show>
+			<Show when="signed-in">
+				<div className="border-t border-stone-700 p-5">
+					<div className="flex items-center gap-2">
+						<UserButton
+							appearance={{
+								elements: {},
+							}}
+						/>
+						<div className="text-green-100">
+							<div>{user?.fullName}</div>
+							<div>{user?.emailAddresses[0].emailAddress}</div>
+						</div>
+					</div>
+				</div>
+			</Show>
 		</div>
 	);
 };

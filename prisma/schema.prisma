@@ -7,9 +7,16 @@ datasource db {
   provider = "postgresql"
 }
 
+model User {
+  userId      String          @id
+  sheets      Sheet[]
+}
+
 model Sheet {
   id        String           @id @default(uuid())
   name      String           @unique
+  userId    String
+  user      User             @relation(fields: [userId], references: [userId], onDelete: Cascade)
 
   createdAt DateTime         @default(now())
   updatedAt DateTime         @updatedAt

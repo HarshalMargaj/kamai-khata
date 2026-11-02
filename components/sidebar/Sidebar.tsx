@@ -42,7 +42,7 @@ const Sidebar = () => {
 			className={`relative ${isExpanded ? "w-75" : "w-20"} border-r border-stone-700 h-full select-none duration-150 transition-all flex flex-col justify-items-center`}
 		>
 			<div
-				onClick={prev => setIsExpanded(!prev)}
+				onClick={() => setIsExpanded(!isExpanded)}
 				className="absolute -right-3.5 top-6.5 rounded-md border border-stone-700 bg-stone-900 cursor-pointer hover:border-white duration-150 transition-all"
 			>
 				{isExpanded ? (

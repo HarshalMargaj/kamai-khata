@@ -12,7 +12,7 @@ const SheetContent = async ({ params }: PageProps) => {
 	const { id } = await params;
 	return (
 		<div className="p-5 space-y-4">
-			<TotolEarning />
+			<TotolEarning id={id} />
 			<Table id={id} />
 		</div>
 	);

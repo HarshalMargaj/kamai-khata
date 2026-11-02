@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 import React, { useRef, useState } from "react";
 import Dropdown from "./Dropdown";
 import { useOnClickOutside } from "usehooks-ts";
@@ -11,6 +11,7 @@ import { usePathname } from "next/navigation";
 
 const Sidebar = () => {
 	const [isOpen, setIsOpen] = useState(false);
+	const [isExpanded, setIsExpanded] = useState(true);
 	const ref = useRef<HTMLDivElement>(null);
 	const pathname = usePathname();
 
@@ -35,32 +36,48 @@ const Sidebar = () => {
 	});
 
 	return (
-		<div className="p-5 space-y-4 w-75 border-r border-stone-700 h-full">
-			<div className="text-3xl font-bold text-green-500">Kamai Khata</div>
+		<div
+			className={`relative p-5 space-y-4 ${isExpanded ? "w-75" : "w-20"} border-r border-stone-700 h-full select-none duration-150 transition-all`}
+		>
+			<div
+				onClick={() => setIsExpanded(!isExpanded)}
+				className="absolute -right-3.5 top-6.5 rounded-md border border-stone-700 bg-stone-900 cursor-pointer hover:border-white duration-150 transition-all"
+			>
+				{isExpanded ? (
+					<ChevronLeft className="text-stone-400" />
+				) : (
+					<ChevronRight className="text-stone-400" />
+				)}
+			</div>
+			<div className="text-3xl font-bold text-green-500">
+				{isExpanded ? "Kamai Khata" : "KK"}
+			</div>
 			<div ref={ref} className="space-y-4">
 				<button
 					onClick={handleClick}
-					className="border border-stone-700 w-full p-2 rounded-md flex items-center justify-center cursor-pointer hover:border-white duration-500 transition-all text-white"
+					className={`border border-stone-700 w-full p-2 ${isExpanded ? "rounded-md" : "rounded-[20px]"} flex items-center justify-center cursor-pointer hover:border-white duration-500 transition-all text-white`}
 				>
 					<Plus />
 				</button>
 				{isOpen && <Dropdown setIsOpen={setIsOpen} />}
 			</div>
-			<div className="space-y-4 w-full">
-				{sheets.map(sheet => {
-					const isActive = pathname === `/sheet/${sheet.id}`;
+			{isExpanded && (
+				<div className="space-y-4 w-full">
+					{sheets.map(sheet => {
+						const isActive = pathname === `/sheet/${sheet.id}`;
 
-					return (
-						<Link
-							href={`/sheet/${sheet.id}`}
-							key={sheet.id}
-							className={`${isActive ? "bg-green-500 text-black font-bold" : "bg-transparent text-green-200"} cursor-pointer w-full p-2 rounded-md block`}
-						>
-							{sheet.name}
-						</Link>
-					);
-				})}
-			</div>
+						return (
+							<Link
+								href={`/sheet/${sheet.id}`}
+								key={sheet.id}
+								className={`${isActive ? "bg-green-500 text-black font-bold" : "bg-transparent text-green-200"} cursor-pointer w-full p-2 rounded-md block`}
+							>
+								{sheet.name}
+							</Link>
+						);
+					})}
+				</div>
+			)}
 		</div>
 	);
 };

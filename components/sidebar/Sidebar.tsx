@@ -39,7 +39,7 @@ const Sidebar = () => {
 
 	return (
 		<div
-			className={`relative ${isExpanded ? "w-75" : "w-20"} border-r border-stone-700 h-full select-none duration-150 transition-all flex flex-col`}
+			className={`relative ${isExpanded ? "w-75" : "w-20"} border-r border-stone-700 h-full select-none duration-150 transition-all flex flex-col justify-items-center`}
 		>
 			<div
 				onClick={() => setIsExpanded(!isExpanded)}
@@ -89,17 +89,28 @@ const Sidebar = () => {
 				</Link>
 			</Show>
 			<Show when="signed-in">
-				<div className="border-t border-stone-700 p-5">
+				<div
+					className={`${isExpanded ? "border-t" : "border-none"} border-stone-700 p-5 mt-auto`}
+				>
 					<div className="flex items-center gap-2">
 						<UserButton
 							appearance={{
-								elements: {},
+								elements: {
+									userButtonAvatarBox: {
+										width: "40px",
+										height: "40px",
+									},
+								},
 							}}
 						/>
-						<div className="text-green-100">
-							<div>{user?.fullName}</div>
-							<div>{user?.emailAddresses[0].emailAddress}</div>
-						</div>
+						{isExpanded && (
+							<div className="text-green-100">
+								<div>{user?.fullName}</div>
+								<div className="text-gray-600">
+									{user?.emailAddresses[0].emailAddress}
+								</div>
+							</div>
+						)}
 					</div>
 				</div>
 			</Show>

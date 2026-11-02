@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getSheets } from "@/actions/get-sheets";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Show, SignedIn, SignIn, UserButton, useUser } from "@clerk/nextjs";
+import { Show, UserButton, useUser } from "@clerk/nextjs";
 
 const Sidebar = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -54,7 +54,7 @@ const Sidebar = () => {
 			<div className="p-5 text-3xl font-bold text-green-500">
 				{isExpanded ? "Kamai Khata" : "KK"}
 			</div>
-			<div ref={ref} className="space-y-4 px-5">
+			<div ref={ref} className="relative px-5">
 				<button
 					onClick={handleClick}
 					className={`border border-stone-700 w-full p-2 ${isExpanded ? "rounded-md" : "rounded-[20px]"} flex items-center justify-center cursor-pointer hover:border-white duration-500 transition-all text-white`}

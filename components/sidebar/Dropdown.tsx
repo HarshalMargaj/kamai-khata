@@ -32,7 +32,7 @@ const Dropdown = ({ setIsOpen }: DropdownProps) => {
 	return (
 		<form
 			onSubmit={handleSubmit}
-			className="bg-neutral-900 p-2 rounded-md space-y-2"
+			className="absolute top-0 right-5 bg-neutral-900 p-2 w-65 rounded-md space-y-2"
 		>
 			<input
 				autoFocus

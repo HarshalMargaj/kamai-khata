@@ -1,3 +1,4 @@
+import TotolEarning from "@/components/sheet/TotolEarning";
 import React, { Suspense } from "react";
 
 interface PageProps {
@@ -8,7 +9,11 @@ interface PageProps {
 
 const SheetContent = async ({ params }: PageProps) => {
 	const { id } = await params;
-	return <div>{id}</div>;
+	return (
+		<div>
+			<TotolEarning />
+		</div>
+	);
 };
 
 const page = async ({ params }: PageProps) => {

@@ -61,7 +61,9 @@ const Sidebar = () => {
 				>
 					<Plus />
 				</button>
-				{isOpen && <Dropdown setIsOpen={setIsOpen} />}
+				{isOpen && (
+					<Dropdown setIsOpen={setIsOpen} isExpanded={isExpanded} />
+				)}
 			</div>
 			{isExpanded && (
 				<div className="space-y-4 w-full flex-1 p-5">

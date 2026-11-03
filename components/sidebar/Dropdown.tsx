@@ -3,10 +3,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { SetStateAction } from "react";
 
 interface DropdownProps {
+	isExpanded: boolean;
 	setIsOpen: React.Dispatch<SetStateAction<boolean>>;
 }
 
-const Dropdown = ({ setIsOpen }: DropdownProps) => {
+const Dropdown = ({ setIsOpen, isExpanded }: DropdownProps) => {
 	const queryClient = useQueryClient();
 
 	const { mutateAsync: createSheetMutation } = useMutation({
@@ -32,7 +33,7 @@ const Dropdown = ({ setIsOpen }: DropdownProps) => {
 	return (
 		<form
 			onSubmit={handleSubmit}
-			className="absolute top-0 right-5 bg-neutral-900 p-2 w-65 rounded-md space-y-2"
+			className={`absolute top-0 ${isExpanded ? " right-5" : "left-0"} bg-neutral-900 p-2 w-70 rounded-md space-y-2`}
 		>
 			<input
 				autoFocus

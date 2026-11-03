@@ -42,7 +42,7 @@ const AddEntryForm = ({ id, setIsOpen }: AddEntryFormProps) => {
 	return (
 		<form
 			onSubmit={handleSubmit}
-			className="absolute top-14 bg-stone-950  p-5 rounded-lg space-y-4 select-none"
+			className="absolute bottom-14 right-0 z-10 bg-black border border-white p-5 rounded-lg space-y-4 select-none"
 		>
 			<div className="flex flex-col gap-2">
 				<label htmlFor="incomeSource" className={labelClass}>

@@ -39,7 +39,7 @@ const Sidebar = () => {
 
 	return (
 		<div
-			className={`relative ${isExpanded ? "w-75" : "w-20"} border-r border-stone-700 h-full select-none duration-150 transition-all flex flex-col justify-items-center`}
+			className={`relative ${isExpanded ? "w-80" : "w-20"} border-r border-stone-700 h-full select-none duration-150 transition-all flex flex-col justify-items-center`}
 		>
 			<div
 				onClick={() => setIsExpanded(!isExpanded)}

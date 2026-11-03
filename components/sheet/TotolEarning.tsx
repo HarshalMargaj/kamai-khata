@@ -17,7 +17,7 @@ const TotolEarning = ({ id }: TotolEarningProps) => {
 	return (
 		<div className="border border-stone-700 rounded-lg p-5 space-y-2">
 			<div className="text-white">Total Earning</div>
-			<div className="text-green-500 font-bold text-5xl">
+			<div className="text-green-500 font-bold text-6xl">
 				{isLoading ? "..." : `₹${total.toLocaleString("en-IN")}`}
 			</div>
 		</div>

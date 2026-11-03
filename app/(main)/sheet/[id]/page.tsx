@@ -11,7 +11,7 @@ interface PageProps {
 const SheetContent = async ({ params }: PageProps) => {
 	const { id } = await params;
 	return (
-		<div className="p-5 space-y-4">
+		<div className="p-5 space-y-4 flex flex-col h-full">
 			<TotolEarning id={id} />
 			<Table id={id} />
 		</div>

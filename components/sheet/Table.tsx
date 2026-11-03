@@ -1,6 +1,6 @@
 "use client";
 
-import { Divide, EllipsisVertical, Plus } from "lucide-react";
+import { EllipsisVertical, Plus } from "lucide-react";
 import React, { useRef, useState } from "react";
 import AddEntryForm from "./AddEntryForm";
 import { useOnClickOutside } from "usehooks-ts";
@@ -41,14 +41,22 @@ const Table = ({ id }: TableProps) => {
 		queryFn: () => getEntries(id),
 	});
 
+	const formatINR = (value: number) =>
+		new Intl.NumberFormat("en-IN", {
+			style: "currency",
+			currency: "INR",
+			minimumFractionDigits: 2,
+			maximumFractionDigits: 2,
+		}).format(value);
+
 	return (
-		<div className="space-y-4">
-			<div ref={ref} className="relative">
+		<div className="space-y-4 relative flex-1">
+			<div ref={ref} className="absolute bottom-0 right-0">
 				<button
 					onClick={() => setIsOpen(true)}
 					className="text-white border border-stone-700 rounded-md cursor-pointer flex items-center gap-2 p-2 hover:border-white duration-500 transition-all"
 				>
-					<Plus /> Add Entry
+					<Plus />
 				</button>
 				{isOpen && <AddEntryForm id={id} setIsOpen={setIsOpen} />}
 			</div>
@@ -67,7 +75,7 @@ const Table = ({ id }: TableProps) => {
 						entries.map((entry, index) => (
 							<tr
 								key={entry.id}
-								className="border-b border-stone-800 last:border-0 hover:bg-neutral-900"
+								className="border-b border-stone-800 last:border-0 hover:bg-neutral-900 text-sm"
 							>
 								<td className="text-center p-2">{index + 1}</td>
 								<td className="text-center p-2">
@@ -84,20 +92,20 @@ const Table = ({ id }: TableProps) => {
 									)}
 								</td>
 								<td className="text-center p-2">
-									{entry.investedAmount}
+									{formatINR(entry.investedAmount)}
 								</td>
 								<td className="text-center p-2">
-									{entry.returnAmount}
+									{formatINR(entry.returnAmount)}
 								</td>
 								<td className="text-center p-2 text-red-500">
-									{entry.fees}
+									{formatINR(entry.fees)}
 								</td>
 								<td className="text-center p-2 text-green-500">
-									{(
+									{formatINR(
 										entry.returnAmount -
-										entry.investedAmount -
-										entry.fees
-									).toFixed(2)}
+											entry.investedAmount -
+											entry.fees,
+									)}
 								</td>
 								<td className="relative">
 									<div ref={dropdownRef}>

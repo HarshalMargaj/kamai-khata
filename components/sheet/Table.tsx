@@ -1,12 +1,12 @@
 "use client";
 
-import { EllipsisVertical, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import React, { useRef, useState } from "react";
 import AddEntryForm from "./AddEntryForm";
 import { useOnClickOutside } from "usehooks-ts";
 import { useQuery } from "@tanstack/react-query";
 import { getEntries } from "@/actions/get-entries";
-import Dropdown from "./Dropdown";
+import ActionCell from "./ActionCell";
 
 const headers = [
 	"Sr. No.",
@@ -24,16 +24,10 @@ interface TableProps {
 
 const Table = ({ id }: TableProps) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const [isVisible, setIsVisible] = useState(false);
 	const ref = useRef<HTMLDivElement>(null);
-	const dropdownRef = useRef<HTMLDivElement>(null);
 
 	useOnClickOutside(ref as React.RefObject<HTMLDivElement>, () =>
 		setIsOpen(false),
-	);
-
-	useOnClickOutside(dropdownRef as React.RefObject<HTMLDivElement>, () =>
-		setIsVisible(false),
 	);
 
 	const { data: entries = [] } = useQuery({
@@ -108,17 +102,7 @@ const Table = ({ id }: TableProps) => {
 									)}
 								</td>
 								<td className="relative">
-									<div ref={dropdownRef}>
-										<div
-											onClick={() => setIsVisible(true)}
-											className="text-center cursor-pointer hover:bg-stone-600 rounded-md w-6 h-6 flex items-center justify-center"
-										>
-											<EllipsisVertical size={20} />
-										</div>
-										{isVisible && (
-											<Dropdown id={entry.id} />
-										)}
-									</div>
+									<ActionCell entryId={entry.id} />
 								</td>
 							</tr>
 						))

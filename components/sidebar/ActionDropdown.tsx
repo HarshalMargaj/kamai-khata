@@ -1,11 +1,18 @@
 import { deleteSheet } from "@/actions/delete-sheet";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { SetStateAction } from "react";
 
 interface ActionDropdownProps {
 	id: string;
+	setIsEditing: React.Dispatch<SetStateAction<boolean>>;
+	setIsOpen: React.Dispatch<SetStateAction<boolean>>;
 }
 
-const ActionDropdown = ({ id }: ActionDropdownProps) => {
+const ActionDropdown = ({
+	id,
+	setIsEditing,
+	setIsOpen,
+}: ActionDropdownProps) => {
 	const queryClient = useQueryClient();
 
 	const { mutateAsync: deleteSheetMutation } = useMutation({
@@ -30,7 +37,13 @@ const ActionDropdown = ({ id }: ActionDropdownProps) => {
 			>
 				Delete
 			</div>
-			<div className="flex items-center gap-3 hover:bg-stone-800 p-2 rounded-md cursor-pointer">
+			<div
+				onClick={() => {
+					setIsEditing(true);
+					setIsOpen(false);
+				}}
+				className="flex items-center gap-3 hover:bg-stone-800 p-2 rounded-md cursor-pointer"
+			>
 				Edit
 			</div>
 		</div>

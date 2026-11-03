@@ -9,6 +9,7 @@ import { getSheets } from "@/actions/get-sheets";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Show, UserButton, useUser } from "@clerk/nextjs";
+import Sheets from "./Sheets";
 
 const Sidebar = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -71,13 +72,12 @@ const Sidebar = () => {
 						const isActive = pathname === `/sheet/${sheet.id}`;
 
 						return (
-							<Link
-								href={`/sheet/${sheet.id}`}
+							<Sheets
 								key={sheet.id}
-								className={`${isActive ? "bg-green-500 text-black font-bold" : "bg-transparent text-green-200"} cursor-pointer w-full p-2 rounded-md block`}
-							>
-								{sheet.name}
-							</Link>
+								isActive={isActive}
+								sheetId={sheet.id}
+								sheetName={sheet.name}
+							/>
 						);
 					})}
 				</div>

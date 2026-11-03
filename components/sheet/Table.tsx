@@ -54,7 +54,7 @@ const Table = ({ id }: TableProps) => {
 				</button>
 				{isOpen && <AddEntryForm id={id} setIsOpen={setIsOpen} />}
 			</div>
-			<table className="text-white w-full" border={2}>
+			<table className="text-green-100 w-full" border={2}>
 				<thead className="border-b border-stone-700 text-stone-400">
 					<tr>
 						{headers.map(header => (
@@ -91,10 +91,10 @@ const Table = ({ id }: TableProps) => {
 								<td className="text-center p-2">
 									{formatINR(entry.returnAmount)}
 								</td>
-								<td className="text-center p-2 text-red-500">
+								<td className="text-center p-2 text-rose-500 font-medium">
 									{formatINR(entry.fees)}
 								</td>
-								<td className="text-center p-2 text-green-500">
+								<td className="text-center p-2 text-green-400 font-medium">
 									{formatINR(
 										entry.returnAmount -
 											entry.investedAmount -

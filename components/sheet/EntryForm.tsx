@@ -56,7 +56,6 @@ const EntryForm = ({
 					placeholder="e.g. Stocks, Freelance, Mutual Fund"
 					className={inputClass}
 					defaultValue={defaultValues?.incomeSource}
-					// onChange={e => setIconmeSource(e.target.value)}
 				/>
 			</div>
 

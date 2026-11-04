@@ -102,7 +102,7 @@ const Table = ({ id }: TableProps) => {
 									)}
 								</td>
 								<td className="relative">
-									<ActionCell entryId={entry.id} />
+									<ActionCell entry={entry} />
 								</td>
 							</tr>
 						))

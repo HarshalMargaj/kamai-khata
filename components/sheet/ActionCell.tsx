@@ -2,12 +2,13 @@ import { EllipsisVertical } from "lucide-react";
 import React, { useRef, useState } from "react";
 import { useOnClickOutside } from "usehooks-ts";
 import Dropdown from "./Dropdown";
+import { EntryWithNumbers } from "@/types/EntryWithNumbers";
 
 interface ActionCellProps {
-	entryId: string;
+	entry: EntryWithNumbers;
 }
 
-const ActionCell = ({ entryId }: ActionCellProps) => {
+const ActionCell = ({ entry }: ActionCellProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -23,7 +24,7 @@ const ActionCell = ({ entryId }: ActionCellProps) => {
 			>
 				<EllipsisVertical size={20} />
 			</div>
-			{isOpen && <Dropdown id={entryId} />}
+			{isOpen && <Dropdown entry={entry} />}
 		</div>
 	);
 };

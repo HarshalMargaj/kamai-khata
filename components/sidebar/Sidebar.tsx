@@ -44,7 +44,7 @@ const Sidebar = () => {
 		>
 			<div
 				onClick={() => setIsExpanded(!isExpanded)}
-				className="absolute -right-3.5 top-6.5 rounded-md border border-stone-700 bg-stone-900 cursor-pointer hover:border-white duration-150 transition-all"
+				className="absolute -right-3.5 top-6.5 rounded-md border border-stone-700 bg-black cursor-pointer hover:border-white duration-150 transition-all"
 			>
 				{isExpanded ? (
 					<ChevronLeft className="text-stone-400" />

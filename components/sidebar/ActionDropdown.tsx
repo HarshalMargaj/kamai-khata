@@ -30,7 +30,7 @@ const ActionDropdown = ({
 	};
 
 	return (
-		<div className="absolute z-10 -right-15 top-45 bg-stone-900 rounded-lg p-2 text-white space-y-2 w-30">
+		<div className="absolute z-10 -right-15 top-45 bg-black border border-white rounded-lg p-2 text-white space-y-2 w-30">
 			<div
 				onClick={() => handleDelete(id)}
 				className="flex items-center gap-3 hover:bg-stone-800 p-2 rounded-md text-red-500 cursor-pointer"

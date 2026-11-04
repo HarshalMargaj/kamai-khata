@@ -34,7 +34,7 @@ const Dropdown = ({ setIsOpen, isExpanded }: DropdownProps) => {
 	return (
 		<form
 			onSubmit={handleSubmit}
-			className={`absolute top-0 ${isExpanded ? " right-5" : "left-0"} bg-neutral-900 p-2 w-70 rounded-md space-y-2`}
+			className={`absolute top-0 ${isExpanded ? " right-5" : "left-0"} bg-black border border-white p-2 w-70 rounded-md space-y-2`}
 		>
 			<input
 				autoFocus

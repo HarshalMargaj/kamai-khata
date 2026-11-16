@@ -10,12 +10,12 @@ import ActionCell from "./ActionCell";
 
 const headers = [
 	"Sr. No.",
-	"Income Source",
+	"Source",
 	"Date",
 	"Invested",
 	"Return",
-	"Fee Cut",
-	"Profit & Loss",
+	"Charges",
+	"P/L",
 ];
 
 interface TableProps {
@@ -75,7 +75,7 @@ const Table = ({ id }: TableProps) => {
 								<td className="text-center p-2">
 									{entry.incomeSource}
 								</td>
-								<td className="text-center p-2">
+								<td className="text-center p-2 w-40">
 									{new Date(entry.date).toLocaleDateString(
 										"en-IN",
 										{

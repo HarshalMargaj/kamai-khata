@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
+import { ChevronLeft, ChevronRight, LogIn, Plus } from "lucide-react";
 import React, { useRef, useState } from "react";
 import Dropdown from "./Dropdown";
 import { useOnClickOutside } from "usehooks-ts";
@@ -82,14 +82,16 @@ const Sidebar = () => {
 					})}
 				</div>
 			)}
-			<Show when="signed-out">
-				<Link
-					href={"/sign-in"}
-					className="border border-stone-700 text-white p-2 w-full rounded-md hover:border-white duration-500 transition-all cursor-pointer"
-				>
-					Log In
-				</Link>
-			</Show>
+			<div className={`p-5 w-full ${isExpanded ? "" : " mt-auto"}`}>
+				<Show when="signed-out">
+					<Link
+						href={"/sign-in"}
+						className={`border border-stone-700 text-white p-2 w-full ${isExpanded ? "rounded-md" : "rounded-full"} hover:border-white duration-500 transition-all cursor-pointer block text-center`}
+					>
+						{isExpanded ? "Log In" : <LogIn />}
+					</Link>
+				</Show>
+			</div>
 			<Show when="signed-in">
 				<div
 					className={`${isExpanded ? "border-t" : "border-none"} border-stone-700 p-5 mt-auto`}

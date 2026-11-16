@@ -22,7 +22,7 @@ export async function createEntry(formData: FormData) {
 
 	if (!sheet) throw new Error("Sheet not found");
 
-	await db.entry.create({
+	await db.earning.create({
 		data: {
 			incomeSource,
 			date: new Date(date),

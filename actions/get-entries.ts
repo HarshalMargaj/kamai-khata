@@ -7,7 +7,7 @@ export async function getEntries(sheetId: string) {
 	const { userId } = await auth();
 	if (!userId) return [];
 
-	const entries = await db.entry.findMany({
+	const entries = await db.earning.findMany({
 		where: { sheetId, userId },
 		orderBy: { date: "desc" },
 	});

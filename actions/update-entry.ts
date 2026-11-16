@@ -28,7 +28,7 @@ export async function updateEntry(formData: FormData) {
 		throw new Error("Invalid amount");
 	}
 
-	await db.entry.update({
+	await db.earning.update({
 		where: {
 			id: entryId,
 			userId,

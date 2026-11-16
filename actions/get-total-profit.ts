@@ -8,7 +8,7 @@ export async function getTotalProfit(sheetId: string) {
 	const { userId } = await auth();
 	if (!userId) return 0;
 
-	const { _sum } = await db.entry.aggregate({
+	const { _sum } = await db.earning.aggregate({
 		where: { sheetId, userId },
 		_sum: {
 			investedAmount: true,

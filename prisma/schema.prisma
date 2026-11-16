@@ -10,7 +10,8 @@ datasource db {
 model User {
   userId      String          @id
   sheets      Sheet[]
-  entry       Entry[]
+  earnings    Earning[]
+  expenses    Expense[]
 }
 
 model Sheet {
@@ -18,13 +19,13 @@ model Sheet {
   name      String           @unique
   userId    String
   user      User             @relation(fields: [userId], references: [userId], onDelete: Cascade)
-  entry     Entry[]
+  earnings     Earning[]
 
   createdAt DateTime         @default(now())
   updatedAt DateTime         @updatedAt
 }
 
-model Entry {
+model Earning {
   id              String    @id @default(uuid())
   incomeSource    String      
   date            DateTime
@@ -41,5 +42,19 @@ model Entry {
   updatedAt       DateTime       @updatedAt
 
   @@index([sheetId])
+  @@index([userId])
+}
+
+model Expense {
+  id          String           @id @default(uuid())
+  title       String
+  date        DateTime          
+  amount      Int
+  userId      String
+  user        User             @relation(fields: [userId], references: [userId], onDelete: Cascade)
+
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
   @@index([userId])
 }

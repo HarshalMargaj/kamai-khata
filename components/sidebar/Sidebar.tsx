@@ -40,7 +40,7 @@ const Sidebar = () => {
 
 	return (
 		<div
-			className={`relative ${isExpanded ? "w-80" : "w-20"} border-r border-stone-700 h-full select-none duration-150 transition-all flex flex-col justify-items-center`}
+			className={`relative ${isExpanded ? "w-80" : "w-20"} border-r border-stone-900 h-full select-none duration-150 transition-all flex flex-col justify-items-center`}
 		>
 			<div
 				onClick={() => setIsExpanded(!isExpanded)}
@@ -58,7 +58,7 @@ const Sidebar = () => {
 			<div ref={ref} className="relative px-5">
 				<button
 					onClick={handleClick}
-					className={`border border-stone-700 w-full p-2 ${isExpanded ? "rounded-md" : "rounded-[20px]"} flex items-center justify-center cursor-pointer hover:border-white duration-500 transition-all text-white`}
+					className={`border border-stone-900 w-full p-2 ${isExpanded ? "rounded-md" : "rounded-[20px]"} flex items-center justify-center cursor-pointer hover:border-white duration-500 transition-all text-white`}
 				>
 					<Plus />
 				</button>
@@ -86,7 +86,7 @@ const Sidebar = () => {
 				<Show when="signed-out">
 					<Link
 						href={"/sign-in"}
-						className={`border border-stone-700 text-white p-2 w-full ${isExpanded ? "rounded-md" : "rounded-full"} hover:border-white duration-500 transition-all cursor-pointer block text-center`}
+						className={`border border-stone-900 text-white p-2 w-full ${isExpanded ? "rounded-md" : "rounded-full"} hover:border-white duration-500 transition-all cursor-pointer block text-center`}
 					>
 						{isExpanded ? "Log In" : <LogIn />}
 					</Link>
@@ -94,7 +94,7 @@ const Sidebar = () => {
 			</div>
 			<Show when="signed-in">
 				<div
-					className={`${isExpanded ? "border-t" : "border-none"} border-stone-700 p-5 mt-auto`}
+					className={`${isExpanded ? "border-t" : "border-none"} border-stone-900 p-5 mt-auto`}
 				>
 					<div className="flex items-center gap-2">
 						<UserButton

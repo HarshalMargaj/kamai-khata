@@ -18,9 +18,9 @@ const TotolEarning = ({ id }: TotolEarningProps) => {
 	const progress = (total / 100000) * 100;
 
 	return (
-		<div className="border border-stone-700 rounded-lg p-5 flex items-center justify-between">
+		<div className="border border-stone-900 rounded-lg p-5 flex items-center justify-between">
 			<div className="space-y-2">
-				<div className="text-white">Total Earning</div>
+				<div className="text-green-100">Total Earning</div>
 				<div className="text-green-500 font-bold text-6xl">
 					{isLoading ? "..." : `₹${total.toLocaleString("en-IN")}`}
 				</div>
@@ -32,7 +32,7 @@ const TotolEarning = ({ id }: TotolEarningProps) => {
 				</div>
 				<div className="text-green-100 flex items-center gap-4 w-120">
 					<div className="text-4xl font-bold">0</div>
-					<div className="border border-stone-600 p-2 rounded-2xl w-full">
+					<div className="border border-stone-900 p-2 rounded-2xl w-full">
 						<div
 							style={{ width: `${progress.toFixed(2)}%` }}
 							className={`bg-green-600 h-15 rounded-lg flex items-center justify-center text-stone-900 font-bold`}

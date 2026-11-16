@@ -25,7 +25,7 @@ interface TableProps {
 const Table = ({ id }: TableProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const ref = useRef<HTMLDivElement>(null);
-	const [isVisible, setIsVisible] = useState(false);
+	const [isVisible, setIsVisible] = useState(true);
 
 	useOnClickOutside(ref as React.RefObject<HTMLDivElement>, () =>
 		setIsOpen(false),
@@ -45,31 +45,35 @@ const Table = ({ id }: TableProps) => {
 		}).format(value);
 
 	return (
-		<div className="space-y-4 relative flex-1">
-			<div ref={ref} className="absolute bottom-0 right-0">
-				<button
-					onClick={() => setIsOpen(true)}
-					className="text-white border border-stone-700 rounded-md cursor-pointer flex items-center gap-2 p-2 hover:border-white duration-500 transition-all"
-				>
-					<Plus />
-				</button>
-				{isOpen && <AddEntryForm id={id} setIsOpen={setIsOpen} />}
-			</div>
-			<div className="bg-stone-900 text-green-100 px-4 py-2 flex items-center justify-between">
+		<div className="space-y-4 relative">
+			<div className="border-b border-stone-900 text-green-100 p-4 flex items-center justify-between">
 				Earnings
-				<div
-					onClick={() => setIsVisible(!isVisible)}
-					className="border border-stone-700 rounded-full p-0.5"
-				>
-					<ChevronRight
-						size={20}
-						className={`${isVisible ? "rotate-90" : "rotate-0"} transition-all duration-500`}
-					/>
+				<div className="flex items-center gap-2">
+					<div ref={ref} className="">
+						<button
+							onClick={() => setIsOpen(true)}
+							className="text-white border border-stone-800 rounded-full p-1 cursor-pointer flex items-center gap-2 hover:border-white duration-500 transition-all"
+						>
+							<Plus size={20} />
+						</button>
+						{isOpen && (
+							<AddEntryForm id={id} setIsOpen={setIsOpen} />
+						)}
+					</div>
+					<div
+						onClick={() => setIsVisible(!isVisible)}
+						className="border border-stone-800 rounded-full p-1"
+					>
+						<ChevronRight
+							size={20}
+							className={`${isVisible ? "rotate-90" : "rotate-0"} transition-all duration-500`}
+						/>
+					</div>
 				</div>
 			</div>
 			{isVisible && (
 				<table className="text-green-100 w-full " border={2}>
-					<thead className="border-b border-stone-700 text-stone-400">
+					<thead className="border-b border-stone-900 text-stone-400">
 						<tr>
 							{headers.map(header => (
 								<th key={header} className="p-2">
@@ -83,7 +87,7 @@ const Table = ({ id }: TableProps) => {
 							entries.map((entry, index) => (
 								<tr
 									key={entry.id}
-									className="border-b border-stone-800 last:border-0 hover:bg-neutral-900 text-sm"
+									className="border-b border-stone-900 last:border-0 hover:bg-neutral-900 text-sm"
 								>
 									<td className="text-center p-2">
 										{index + 1}

@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus } from "lucide-react";
+import { ChevronRight, Plus } from "lucide-react";
 import React, { useRef, useState } from "react";
 import AddEntryForm from "./AddEntryForm";
 import { useOnClickOutside } from "usehooks-ts";
@@ -25,6 +25,7 @@ interface TableProps {
 const Table = ({ id }: TableProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const ref = useRef<HTMLDivElement>(null);
+	const [isVisible, setIsVisible] = useState(false);
 
 	useOnClickOutside(ref as React.RefObject<HTMLDivElement>, () =>
 		setIsOpen(false),
@@ -54,68 +55,83 @@ const Table = ({ id }: TableProps) => {
 				</button>
 				{isOpen && <AddEntryForm id={id} setIsOpen={setIsOpen} />}
 			</div>
-			<table className="text-green-100 w-full" border={2}>
-				<thead className="border-b border-stone-700 text-stone-400">
-					<tr>
-						{headers.map(header => (
-							<th key={header} className="p-2">
-								{header}
-							</th>
-						))}
-					</tr>
-				</thead>
-				<tbody>
-					{entries.length > 0 ? (
-						entries.map((entry, index) => (
-							<tr
-								key={entry.id}
-								className="border-b border-stone-800 last:border-0 hover:bg-neutral-900 text-sm"
-							>
-								<td className="text-center p-2">{index + 1}</td>
-								<td className="text-center p-2">
-									{entry.incomeSource}
-								</td>
-								<td className="text-center p-2 w-40">
-									{new Date(entry.date).toLocaleDateString(
-										"en-IN",
-										{
+			<div className="bg-stone-900 text-green-100 px-4 py-2 flex items-center justify-between">
+				Earnings
+				<div
+					onClick={() => setIsVisible(!isVisible)}
+					className="border border-stone-700 rounded-full p-0.5"
+				>
+					<ChevronRight
+						size={20}
+						className={`${isVisible ? "rotate-90" : "rotate-0"} transition-all duration-500`}
+					/>
+				</div>
+			</div>
+			{isVisible && (
+				<table className="text-green-100 w-full " border={2}>
+					<thead className="border-b border-stone-700 text-stone-400">
+						<tr>
+							{headers.map(header => (
+								<th key={header} className="p-2">
+									{header}
+								</th>
+							))}
+						</tr>
+					</thead>
+					<tbody>
+						{entries.length > 0 ? (
+							entries.map((entry, index) => (
+								<tr
+									key={entry.id}
+									className="border-b border-stone-800 last:border-0 hover:bg-neutral-900 text-sm"
+								>
+									<td className="text-center p-2">
+										{index + 1}
+									</td>
+									<td className="text-center p-2">
+										{entry.incomeSource}
+									</td>
+									<td className="text-center p-2 w-40">
+										{new Date(
+											entry.date,
+										).toLocaleDateString("en-IN", {
 											day: "2-digit",
 											month: "short",
 											year: "numeric",
-										},
-									)}
-								</td>
-								<td className="text-center p-2">
-									{formatINR(entry.investedAmount)}
-								</td>
-								<td className="text-center p-2">
-									{formatINR(entry.returnAmount)}
-								</td>
-								<td className="text-center p-2 text-rose-500 font-medium">
-									{formatINR(entry.fees)}
-								</td>
-								<td className="text-center p-2 text-green-400 font-medium">
-									{formatINR(
-										entry.returnAmount -
-											entry.investedAmount -
-											entry.fees,
-									)}
-								</td>
-								<td className="relative">
-									<ActionCell entry={entry} />
+										})}
+									</td>
+									<td className="text-center p-2">
+										{formatINR(entry.investedAmount)}
+									</td>
+									<td className="text-center p-2">
+										{formatINR(entry.returnAmount)}
+									</td>
+									<td className="text-center p-2 text-rose-500 font-medium">
+										{formatINR(entry.fees)}
+									</td>
+									<td className="text-center p-2 text-green-400 font-medium">
+										{formatINR(
+											entry.returnAmount -
+												entry.investedAmount -
+												entry.fees,
+										)}
+									</td>
+									<td className="relative">
+										<ActionCell entry={entry} />
+									</td>
+								</tr>
+							))
+						) : (
+							<tr className="text-center">
+								<td colSpan={7} className="p-5 text-stone-500">
+									Add your first entry to start tracking your
+									profit and loss.
 								</td>
 							</tr>
-						))
-					) : (
-						<tr className="text-center">
-							<td colSpan={7} className="p-5 text-stone-500">
-								Add your first entry to start tracking your
-								profit and loss.
-							</td>
-						</tr>
-					)}
-				</tbody>
-			</table>
+						)}
+					</tbody>
+				</table>
+			)}
 		</div>
 	);
 };

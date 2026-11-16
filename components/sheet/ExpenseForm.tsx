@@ -1,3 +1,4 @@
+import { LoaderCircle } from "lucide-react";
 import React from "react";
 
 const inputClass =
@@ -6,22 +7,25 @@ const labelClass = "text-sm font-medium text-stone-300";
 
 interface ExpenseFormProps {
 	className: string;
+	onsubmit: (e: React.SubmitEvent<HTMLFormElement>) => Promise<void>;
+	isPending: boolean;
 }
 
-const ExpenseForm = ({ className }: ExpenseFormProps) => {
+const ExpenseForm = ({ className, onsubmit, isPending }: ExpenseFormProps) => {
 	return (
 		<form
+			onSubmit={onsubmit}
 			className={`absolute ${className} z-10 bg-black border border-white p-5 rounded-lg space-y-4 select-none`}
 		>
 			<div className="flex flex-col gap-2">
-				<label htmlFor="ExpenseTitle" className={labelClass}>
+				<label htmlFor="title" className={labelClass}>
 					Expense Title
 				</label>
 				<input
-					id="ExpenseTitle"
+					id="title"
 					type="text"
 					placeholder="e.g. Petrol, Groceries, Shopping, Rent"
-					name="ExpenseTitle"
+					name="title"
 					className={`${inputClass} scheme-dark`}
 				/>
 			</div>
@@ -39,12 +43,12 @@ const ExpenseForm = ({ className }: ExpenseFormProps) => {
 					/>
 				</div>
 				<div className="flex flex-col gap-2">
-					<label htmlFor="Amount" className={labelClass}>
+					<label htmlFor="amount" className={labelClass}>
 						Amount (₹)
 					</label>
 					<input
-						name="Amount"
-						id="Amount"
+						name="amount"
+						id="amount"
 						type="number"
 						min={0}
 						step="0.01"
@@ -55,10 +59,15 @@ const ExpenseForm = ({ className }: ExpenseFormProps) => {
 				</div>
 			</div>
 			<button
+				disabled={isPending}
 				type="submit"
 				className="w-full p-2 bg-green-500 text-black rounded-md font-bold cursor-pointer hover:bg-green-600 transition-all duration-300 flex items-center justify-center"
 			>
-				Add Expense
+				{isPending ? (
+					<LoaderCircle className="animate-spin transition-all" />
+				) : (
+					"Add Expense"
+				)}
 			</button>
 		</form>
 	);

@@ -7,16 +7,20 @@ import { EntryWithNumbers } from "@/types/EntryWithNumbers";
 
 interface UpdateEntryFormProps {
 	entry: EntryWithNumbers;
-	setIsEditing: React.Dispatch<SetStateAction<boolean>>;
+	setEditingExpenseId: React.Dispatch<SetStateAction<string | null>>;
 }
 
-const UpdateEntryForm = ({ entry, setIsEditing }: UpdateEntryFormProps) => {
+const UpdateEntryForm = ({
+	entry,
+	setEditingExpenseId,
+}: UpdateEntryFormProps) => {
 	const queryClient = useQueryClient();
 
 	const { mutateAsync: updateEntryMutation, isPending } = useMutation({
 		mutationFn: (formData: FormData) => updateEntry(formData),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["entries"] });
+			setEditingExpenseId(null);
 		},
 		onError: error => {
 			console.log(error);
@@ -30,7 +34,6 @@ const UpdateEntryForm = ({ entry, setIsEditing }: UpdateEntryFormProps) => {
 		formData.append("entryId", entry.id);
 
 		await updateEntryMutation(formData);
-		setIsEditing(false);
 	};
 
 	return (

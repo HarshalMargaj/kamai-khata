@@ -4,9 +4,11 @@ import { ChevronRight, Plus } from "lucide-react";
 import React, { useRef, useState } from "react";
 import AddEntryForm from "./AddEntryForm";
 import { useOnClickOutside } from "usehooks-ts";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getEntries } from "@/actions/get-entries";
 import ActionCell from "./ActionCell";
+import { deleteEntry } from "@/actions/delete-entry";
+import UpdateEntryForm from "./UpdateEntryForm";
 
 const headers = [
 	"Sr. No.",
@@ -25,10 +27,17 @@ interface TableProps {
 const Table = ({ id }: TableProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const ref = useRef<HTMLDivElement>(null);
+	const dropdownRef = useRef<HTMLTableDataCellElement>(null);
 	const [isVisible, setIsVisible] = useState(true);
+	const [editingEntryId, setEditingEntryId] = useState<string | null>(null);
 
 	useOnClickOutside(ref as React.RefObject<HTMLDivElement>, () =>
 		setIsOpen(false),
+	);
+
+	useOnClickOutside(
+		dropdownRef as React.RefObject<HTMLTableDataCellElement>,
+		() => setEditingEntryId(null),
 	);
 
 	const { data: entries = [] } = useQuery({
@@ -43,6 +52,18 @@ const Table = ({ id }: TableProps) => {
 			minimumFractionDigits: 2,
 			maximumFractionDigits: 2,
 		}).format(value);
+
+	const queryClient = useQueryClient();
+
+	const { mutateAsync: deleteEntryMutation } = useMutation({
+		mutationFn: (sheetId: string) => deleteEntry(sheetId),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["entries"] });
+		},
+		onError: error => {
+			console.log(error);
+		},
+	});
 
 	return (
 		<div className="space-y-4 relative">
@@ -120,8 +141,24 @@ const Table = ({ id }: TableProps) => {
 												entry.fees,
 										)}
 									</td>
-									<td className="relative">
-										<ActionCell entry={entry} />
+									<td ref={dropdownRef} className="relative">
+										<ActionCell
+											onDelete={() =>
+												deleteEntryMutation(entry.id)
+											}
+											onEdit={() =>
+												setEditingEntryId(entry.id)
+											}
+										/>
+
+										{editingEntryId === entry.id && (
+											<UpdateEntryForm
+												entry={entry}
+												setEditingExpenseId={
+													setEditingEntryId
+												}
+											/>
+										)}
 									</td>
 								</tr>
 							))

@@ -14,8 +14,10 @@ const SheetContent = async ({ params }: PageProps) => {
 	return (
 		<div className="p-5 space-y-4 flex flex-col h-full overflow-auto scrollbar-thin scrollbar-thumb-green-500/10 scroll-smooth">
 			<TotolEarning id={id} />
-			<Table id={id} />
-			<ExpensesTable />
+			<div>
+				<Table id={id} />
+				<ExpensesTable id={id} />
+			</div>
 		</div>
 	);
 };

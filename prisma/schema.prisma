@@ -20,6 +20,7 @@ model Sheet {
   userId    String
   user      User             @relation(fields: [userId], references: [userId], onDelete: Cascade)
   earnings     Earning[]
+  expenses     Expense[]
 
   createdAt DateTime         @default(now())
   updatedAt DateTime         @updatedAt
@@ -52,9 +53,12 @@ model Expense {
   amount      Int
   userId      String
   user        User             @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  sheetId     String
+  sheet       Sheet            @relation(fields: [sheetId], references: [id], onDelete: Cascade)
 
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
 
   @@index([userId])
+  @@index([sheetId])
 }

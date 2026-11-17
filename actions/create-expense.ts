@@ -7,11 +7,23 @@ export async function createExpense(formData: FormData) {
 	const title = formData.get("title") as string;
 	const date = formData.get("date") as string;
 	const amount = Number(formData.get("amount"));
-	console.log(title, date, amount);
+	const sheetId = formData.get("sheetId") as string;
 	const { userId } = await auth();
 
 	if (!userId) {
 		throw new Error("Unauthorized!");
+	}
+
+	// ownership check
+	const sheet = await db.sheet.findFirst({
+		where: {
+			id: sheetId,
+			userId,
+		},
+	});
+
+	if (!sheet) {
+		throw new Error("Sheet not found");
 	}
 
 	if (!title || !date || !amount) {
@@ -24,6 +36,7 @@ export async function createExpense(formData: FormData) {
 			date: new Date(date),
 			amount,
 			userId,
+			sheetId,
 		},
 	});
 }

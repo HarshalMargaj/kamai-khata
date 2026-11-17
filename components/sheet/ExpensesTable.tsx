@@ -4,8 +4,10 @@ import { ChevronRight, Plus } from "lucide-react";
 import React, { useRef, useState } from "react";
 import AddExpenseForm from "./AddExpenseForm";
 import { useOnClickOutside } from "usehooks-ts";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getExpenses } from "@/actions/get-expenses";
+import ActionCell from "./ActionCell";
+import { deleteExpense } from "@/actions/delete-expense";
 
 interface ExpensesTableProps {
 	id: string;
@@ -17,6 +19,7 @@ const ExpensesTable = ({ id }: ExpensesTableProps) => {
 	const [isVisible, setIsVisible] = useState(false);
 	const [isOpen, setIsOpen] = useState(false);
 	const ref = useRef<HTMLDivElement>(null);
+	const queryClient = useQueryClient();
 
 	useOnClickOutside(ref as React.RefObject<HTMLDivElement>, () =>
 		setIsOpen(false),
@@ -36,6 +39,16 @@ const ExpensesTable = ({ id }: ExpensesTableProps) => {
 			minimumFractionDigits: 2,
 			maximumFractionDigits: 2,
 		}).format(value);
+
+	const { mutateAsync: deleteExpenseMutation } = useMutation({
+		mutationFn: (id: string) => deleteExpense(id),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["expenses"] });
+		},
+		onError: error => {
+			console.log(error);
+		},
+	});
 
 	return (
 		<div>
@@ -69,7 +82,7 @@ const ExpensesTable = ({ id }: ExpensesTableProps) => {
 					<thead className="border-b border-stone-900 text-stone-400">
 						<tr>
 							{headers.map(header => (
-								<th key={header} className="p-2">
+								<th key={header} className="p-4">
 									{header}
 								</th>
 							))}
@@ -103,6 +116,15 @@ const ExpensesTable = ({ id }: ExpensesTableProps) => {
 
 									<td className="text-center p-2 text-rose-500 font-medium">
 										{formatINR(Number(expense.amount))}
+									</td>
+									<td className="relative">
+										<ActionCell
+											onDelete={() =>
+												deleteExpenseMutation(
+													expense.id,
+												)
+											}
+										/>
 									</td>
 								</tr>
 							))

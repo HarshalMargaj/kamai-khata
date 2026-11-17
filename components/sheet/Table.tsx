@@ -76,7 +76,7 @@ const Table = ({ id }: TableProps) => {
 					<thead className="border-b border-stone-900 text-stone-400">
 						<tr>
 							{headers.map(header => (
-								<th key={header} className="p-2">
+								<th key={header} className="pb-4 px-4">
 									{header}
 								</th>
 							))}

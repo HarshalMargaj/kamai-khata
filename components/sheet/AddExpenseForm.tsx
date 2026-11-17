@@ -16,7 +16,9 @@ const AddExpenseForm = ({ id, setIsOpen }: AddExpenseFormProps) => {
 	const { mutateAsync: createExpenseMutation, isPending } = useMutation({
 		mutationFn: (formData: FormData) => createExpense(formData),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["expenses"] });
+			queryClient.invalidateQueries({
+				queryKey: ["expenses"],
+			});
 			setIsOpen(false);
 		},
 		onError: error => {

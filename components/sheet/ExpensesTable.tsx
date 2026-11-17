@@ -36,7 +36,7 @@ const ExpensesTable = ({ id }: ExpensesTableProps) => {
 	);
 
 	const { data: expenses = [] } = useQuery({
-		queryKey: ["expenses"],
+		queryKey: ["expenses", id],
 		queryFn: () => getExpenses(id),
 	});
 

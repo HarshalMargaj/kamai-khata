@@ -13,6 +13,7 @@ export async function getExpenses(sheetId: string) {
 			sheetId,
 			userId,
 		},
+		orderBy: { date: "desc" },
 	});
 
 	return response;

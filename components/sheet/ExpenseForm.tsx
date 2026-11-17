@@ -5,13 +5,27 @@ const inputClass =
 	"border border-stone-700 rounded-md p-2 text-white outline-none focus:border-white transition-all duration-300 bg-transparent placeholder:text-stone-500";
 const labelClass = "text-sm font-medium text-stone-300";
 
-interface ExpenseFormProps {
-	className: string;
-	onsubmit: (e: React.SubmitEvent<HTMLFormElement>) => Promise<void>;
-	isPending: boolean;
+export interface ExpenseFormValues {
+	title: string;
+	date: string;
+	amount: number;
 }
 
-const ExpenseForm = ({ className, onsubmit, isPending }: ExpenseFormProps) => {
+interface ExpenseFormProps {
+	defaultValues?: ExpenseFormValues;
+	className?: string;
+	onsubmit: (e: React.SubmitEvent<HTMLFormElement>) => Promise<void>;
+	isPending: boolean;
+	submitLabel: string;
+}
+
+const ExpenseForm = ({
+	className,
+	onsubmit,
+	isPending,
+	defaultValues,
+	submitLabel,
+}: ExpenseFormProps) => {
 	return (
 		<form
 			onSubmit={onsubmit}
@@ -27,6 +41,7 @@ const ExpenseForm = ({ className, onsubmit, isPending }: ExpenseFormProps) => {
 					placeholder="e.g. Petrol, Groceries, Shopping, Rent"
 					name="title"
 					className={`${inputClass} scheme-dark`}
+					defaultValue={defaultValues?.title}
 				/>
 			</div>
 			<div className="flex items-center gap-4">
@@ -40,6 +55,7 @@ const ExpenseForm = ({ className, onsubmit, isPending }: ExpenseFormProps) => {
 						type="date"
 						required
 						className={`${inputClass} scheme-dark`}
+						defaultValue={defaultValues?.date}
 					/>
 				</div>
 				<div className="flex flex-col gap-2">
@@ -55,6 +71,7 @@ const ExpenseForm = ({ className, onsubmit, isPending }: ExpenseFormProps) => {
 						required
 						placeholder="0.00"
 						className={inputClass}
+						defaultValue={defaultValues?.amount}
 					/>
 				</div>
 			</div>
@@ -66,7 +83,7 @@ const ExpenseForm = ({ className, onsubmit, isPending }: ExpenseFormProps) => {
 				{isPending ? (
 					<LoaderCircle className="animate-spin transition-all" />
 				) : (
-					"Add Expense"
+					submitLabel
 				)}
 			</button>
 		</form>

@@ -8,6 +8,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getExpenses } from "@/actions/get-expenses";
 import ActionCell from "./ActionCell";
 import { deleteExpense } from "@/actions/delete-expense";
+import UpdateExpenseForm from "./updateExpenseForm";
 
 interface ExpensesTableProps {
 	id: string;
@@ -18,11 +19,20 @@ const headers = ["Sr. No.", "Title", "Date", "Amount"];
 const ExpensesTable = ({ id }: ExpensesTableProps) => {
 	const [isVisible, setIsVisible] = useState(false);
 	const [isOpen, setIsOpen] = useState(false);
+	const [editingExpenseId, setEditingExpenseId] = useState<string | null>(
+		null,
+	);
 	const ref = useRef<HTMLDivElement>(null);
 	const queryClient = useQueryClient();
+	const dropdownRef = useRef<HTMLTableDataCellElement>(null);
 
 	useOnClickOutside(ref as React.RefObject<HTMLDivElement>, () =>
 		setIsOpen(false),
+	);
+
+	useOnClickOutside(
+		dropdownRef as React.RefObject<HTMLTableDataCellElement>,
+		() => setEditingExpenseId(null),
 	);
 
 	const { data: expenses = [] } = useQuery({
@@ -117,14 +127,26 @@ const ExpensesTable = ({ id }: ExpensesTableProps) => {
 									<td className="text-center p-2 text-rose-500 font-medium">
 										{formatINR(Number(expense.amount))}
 									</td>
-									<td className="relative">
+									<td ref={dropdownRef} className="relative">
 										<ActionCell
 											onDelete={() =>
 												deleteExpenseMutation(
 													expense.id,
 												)
 											}
+											onEdit={() =>
+												setEditingExpenseId(expense.id)
+											}
 										/>
+										{editingExpenseId === expense.id && (
+											<UpdateExpenseForm
+												expenseId={expense.id}
+												setEditingExpenseId={
+													setEditingExpenseId
+												}
+												expense={expense}
+											/>
+										)}
 									</td>
 								</tr>
 							))

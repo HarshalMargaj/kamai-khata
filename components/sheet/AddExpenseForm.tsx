@@ -39,6 +39,7 @@ const AddExpenseForm = ({ id, setIsOpen }: AddExpenseFormProps) => {
 				className="bottom-25 right-5"
 				onsubmit={handleSubmit}
 				isPending={isPending}
+				submitLabel="Add Expense"
 			/>
 		</div>
 	);

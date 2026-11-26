@@ -1,7 +1,7 @@
-import type { Entry } from "@/app/generated/prisma/client";
+import type { Earning } from "@/app/generated/prisma/client";
 
 export type EntryWithNumbers = Omit<
-	Entry,
+	Earning,
 	"investedAmount" | "returnAmount" | "fees"
 > & {
 	investedAmount: number;

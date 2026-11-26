@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Azeret_Mono } from "next/font/google";
+import { Geist } from "next/font/google";
 import "./globals.css";
 import { QueryProvider } from "@/lib/QueryProvider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/ui/themes";
 
-const numberFont2 = Azeret_Mono({
+const numberFont2 = Geist({
 	subsets: ["latin"],
 	variable: "--font-number",
 });

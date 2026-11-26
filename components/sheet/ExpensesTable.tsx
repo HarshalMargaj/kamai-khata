@@ -127,7 +127,14 @@ const ExpensesTable = ({ id }: ExpensesTableProps) => {
 									<td className="text-center p-2 text-rose-500 font-medium">
 										{formatINR(Number(expense.amount))}
 									</td>
-									<td ref={dropdownRef} className="relative">
+									<td
+										ref={
+											editingExpenseId === expense.id
+												? dropdownRef
+												: null
+										}
+										className="relative"
+									>
 										<ActionCell
 											onDelete={() =>
 												deleteExpenseMutation(

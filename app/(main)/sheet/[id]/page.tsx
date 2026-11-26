@@ -4,6 +4,7 @@ import React, { Suspense } from "react";
 import ExpensesTable from "@/components/sheet/ExpensesTable";
 import { db } from "@/lib/db";
 import { notFound } from "next/navigation";
+import Analytics from "@/components/analytics/Analytics";
 
 interface PageProps {
 	params: Promise<{
@@ -21,6 +22,7 @@ const SheetContent = async ({ params }: PageProps) => {
 	return (
 		<div className="p-5 space-y-4 flex flex-col h-full overflow-auto scrollbar-thin scrollbar-thumb-green-500/10 scroll-smooth">
 			<TotolEarning id={id} />
+			{/* <Analytics /> */}
 			<div>
 				<Table id={id} />
 				<ExpensesTable id={id} />

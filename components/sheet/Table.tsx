@@ -141,7 +141,14 @@ const Table = ({ id }: TableProps) => {
 												entry.fees,
 										)}
 									</td>
-									<td ref={dropdownRef} className="relative">
+									<td
+										ref={
+											editingEntryId === entry.id
+												? dropdownRef
+												: null
+										}
+										className="relative"
+									>
 										<ActionCell
 											onDelete={() =>
 												deleteEntryMutation(entry.id)

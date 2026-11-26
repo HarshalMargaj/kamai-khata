@@ -49,7 +49,7 @@ const UpdateExpenseForm = ({
 				date: new Date(expense.date).toISOString().slice(0, 10),
 				amount: expense.amount,
 			}}
-			className="right-0 top-10"
+			className="bottom-0 right-0"
 		/>
 	);
 };
